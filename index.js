@@ -26,7 +26,7 @@ export default function App() {
     "bbjavacd",
     "abjavakkjavak",
     "javajava",
-    "c++",
+    "c",
   ];
   const render = () => {
     const matches =
@@ -35,23 +35,14 @@ export default function App() {
         : textList.filter((text) => {
             return text.includes(search);
           });
+
     const innerHTML = matches
       .map((text) => {
-        const matchIndex = [...text.matchAll(search)].map(
-          (match) => match.index
+        let context = text.replaceAll(
+          search,
+          `<span style="background: tomato">${search}</span>`
         );
-        let index = 0;
-        let inner =
-          matchIndex[0] > 0 ? text.slice(index, index + search.length) : "";
-        matchIndex.forEach((match) => {
-          const notMatched = text.slice(index, match);
-          inner += `<span style="background: tomato">${search}</span>${notMatched}`;
-          index = match + search.length;
-        });
-        if (index < text.length) {
-          inner += text.slice(index);
-        }
-        return `<div>${inner}</div>`;
+        return `<div>${context}</div>`;
       })
       .join("");
     $("#result").innerHTML = innerHTML;
